@@ -77,10 +77,19 @@ module.exports = class Candidate {
 
     static insertAnswer(candId, examId, questionNo, choNo){
         let sql =`
-        INSERT INTO (CandidateID, ExamID, QuestionNumber, ChoiceNumber) VALUES (${candId}, ${examId}, ${questionNo}, ${choNo})
+        INSERT INTO candidatechoices (CandidateID, ExamID, QuestionNumber, ChoiceNumber) VALUES (${candId}, ${examId}, ${questionNo}, ${choNo})
         `
         return db.execute(sql);
     }
 
+    static setExamStatus(candId, examId, status){
+         let sql =`
+        UPDATE candidate_exams 
+        SET Submitted = ${status}
+        WHERE CandidateID = ${candId}
+        AND ExamID = ${examId}
+        `
+        return db.execute(sql);
+    }
 
 }

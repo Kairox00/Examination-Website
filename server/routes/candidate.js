@@ -18,6 +18,7 @@ router.route('/:id/exam')
 
 router.route('/:id/exam/:examId')
 .get(controller.getExamAnswers)
+.post(controller.addExamAnswers);
 
 router.route('/:id/exam/:examId/grade')
 .get(controller.getGrade);

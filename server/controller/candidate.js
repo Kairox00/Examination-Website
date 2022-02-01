@@ -90,6 +90,22 @@ const getExamAnswers = async(req,res)=>{
     }
 }
 
+const addExamAnswers = async(req,res)=>{
+    try{
+        const answers = req.body.answers;
+        console.log(req.body);
+        for (const answer of answers){
+            console.log(answer);
+            const [result] = await Candidate.insertAnswer(req.params.id,req.params.examId,answer[0],answer[1]);
+        }
+        const result = await Candidate.setExamStatus(req.params.id,req.params.examId,true);
+        res.status(200).send('success');
+    }
+    catch(err){
+        throw err;
+    }
+}
+
 const addQuestionAnswer = async(req,res)=>{
     try{
         const [result] = await Candidate.insertAnswer(req.params.id,req.params.examId,req.params.qNo,req.body.choNo);
@@ -140,6 +156,7 @@ module.exports = {
     getQuestionAnswer,
     addQuestionAnswer,
     getExamAnswers,
+    addExamAnswers,
     getGrade,
     getExams
 }

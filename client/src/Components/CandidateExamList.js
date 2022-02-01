@@ -10,7 +10,7 @@ export default function CandidateExamList(props) {
 
     useEffect(() => {
         fetchExams();
-    });
+    },[]);
     
     const fetchExams = ()=>{
         axios.get(`/candidate/${user.CandidateID}/exam`)
@@ -20,11 +20,12 @@ export default function CandidateExamList(props) {
     }
 
     const takeExam = (ExamId)=>{
-        navigate('/Exam',{state: {ExamID: ExamId}});
+        navigate('/Exam',{state: {ExamID: ExamId, CandidateID: user.CandidateID}});
     }
 
     const tableList = list.map((exam,index)=>{
         const date = new Date(exam.Date);
+        const status = exam.Submitted;
         return (
             <tr key={index}>
                 <td>{exam.ExamID}</td>
@@ -32,7 +33,7 @@ export default function CandidateExamList(props) {
                 <td>{exam.DueTime}</td>
                 <td>{exam.Duration}</td>
                 <td>{date.getDate()}/{date.getMonth()+1}/{date.getFullYear()}</td>
-                <td><Button onClick={()=>{takeExam(exam.ExamID)}}>Take Exam</Button></td>
+                <td><Button disabled={status} onClick={()=>{takeExam(exam.ExamID)}}>Take Exam</Button></td>
             </tr>
         )
     })

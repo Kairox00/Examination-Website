@@ -10,8 +10,8 @@ module.exports = class Choice{
        
     }
 
-    static findAll(){
-        return db.execute('SELECT * FROM choices');
+    static findAll(qno){
+        return db.execute(`SELECT * FROM choices WHERE QuestionNumber =${qno}`);
     }
 
     static findById(chno,qno,id){

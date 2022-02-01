@@ -2,7 +2,7 @@ const Choice = require("../models/Choice");
 
 const getAllChoices = (async (req,res,next)=>{
     try{
-       const [result] = await Choice.findAll();
+       const [result] = await Choice.findAll(req.params.qno);
        res.status(200).send(result);
     }
     catch(err){
